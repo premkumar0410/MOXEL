@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head><title>Contact Us | Moxel</title></head>
+<body>
+<main>
+    <h1 class="h2 mb-3">Contact Us</h1>
+    <p>We'd love to hear from you, whether it's a question about an order or a
+        bulk quote for your college, company or team.</p>
+
+    <dl class="row">
+        <dt class="col-sm-3">Business name</dt>
+        <dd class="col-sm-9">[LEGAL BUSINESS NAME]</dd>
+        <dt class="col-sm-3">Address</dt>
+        <dd class="col-sm-9" th:text="${shop.address}">Address</dd>
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9" th:text="${shop.email}">Email</dd>
+        <dt class="col-sm-3">Phone</dt>
+        <dd class="col-sm-9" th:text="${shop.phone}">Phone</dd>
+        <dt class="col-sm-3">Support hours</dt>
+        <dd class="col-sm-9">[e.g. Mon-Sat, 10 am to 6 pm IST]</dd>
+        <dt class="col-sm-3">Grievance officer</dt>
+        <dd class="col-sm-9">[NAME, EMAIL]</dd>
+    </dl>
+</main>
+</body>
+</html>

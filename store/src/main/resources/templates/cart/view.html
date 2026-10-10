@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head><title>Your Cart | Moxel</title></head>
+<body>
+<main>
+    <h1 class="h2 mb-3">Your Cart</h1>
+
+    <div class="alert alert-warning" th:if="${cart.removedUnavailable}">
+        Some items were removed because they are no longer available.
+    </div>
+
+    <div th:if="${#lists.isEmpty(cart.lines)}">
+        <p class="text-muted">Your cart is empty.</p>
+        <a class="btn btn-dark" th:href="@{/products}">Browse T-shirts</a>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(cart.lines)}">
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                <tr>
+                    <th>Item</th><th>Price</th><th>Quantity</th>
+                    <th class="text-end">Total</th><th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="line : ${cart.lines}">
+                    <td>
+                        <a th:href="@{/products/{slug}(slug=${line.productSlug})}"
+                           th:text="${line.productName}">Product</a>
+                        <div class="small text-muted">
+                            <span th:text="${line.color}">Black</span> &middot;
+                            Size <span th:text="${line.size}">M</span>
+                        </div>
+                        <div class="small text-danger" th:unless="${line.stockOk}">
+                            Not enough stock for this quantity. Please reduce it.
+                        </div>
+                    </td>
+                    <td>&#8377;<span th:text="${#numbers.formatDecimal(line.unitPrice, 1, 'COMMA', 2, 'POINT')}">399.00</span></td>
+                    <td>
+                        <form th:action="@{/cart/update}" method="post" class="d-flex gap-2">
+                            <input type="hidden" name="variantId" th:value="${line.variantId}">
+                            <input type="number" name="quantity" th:value="${line.quantity}"
+                                   min="0" max="20"
+                                   class="form-control form-control-sm qty-input" aria-label="Quantity">
+                            <button class="btn btn-outline-dark btn-sm" type="submit">Update</button>
+                        </form>
+                    </td>
+                    <td class="text-end">&#8377;<span th:text="${#numbers.formatDecimal(line.lineTotal, 1, 'COMMA', 2, 'POINT')}">798.00</span></td>
+                    <td>
+                        <form th:action="@{/cart/remove}" method="post">
+                            <input type="hidden" name="variantId" th:value="${line.variantId}">
+                            <button class="btn btn-link btn-sm text-danger" type="submit">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="3" class="text-end">Subtotal</th>
+                    <th class="text-end">&#8377;<span th:text="${#numbers.formatDecimal(cart.subtotal, 1, 'COMMA', 2, 'POINT')}">0.00</span></th>
+                    <th></th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <p class="text-muted small">Shipping and any discounts are calculated at checkout.</p>
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-outline-dark" th:href="@{/products}">Continue shopping</a>
+            <button class="btn btn-dark" type="button" disabled>Checkout (coming soon)</button>
+        </div>
+    </div>
+</main>
+</body>
+</html>

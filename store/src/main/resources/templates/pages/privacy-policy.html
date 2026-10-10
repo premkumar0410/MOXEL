@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head><title>Privacy Policy | Moxel</title></head>
+<body>
+<main>
+    <h1 class="h2 mb-3">Privacy Policy</h1>
+    <p class="text-muted">Last updated: [DATE]</p>
+
+    <h2 class="h5 mt-4">What we collect</h2>
+    <p>Your name, email, phone number, delivery address, order details, and any
+        design files you upload.</p>
+
+    <h2 class="h5 mt-4">How we use it</h2>
+    <p>To process and deliver your order, send order updates, provide support,
+        and meet legal and tax obligations.</p>
+
+    <h2 class="h5 mt-4">Who we share it with</h2>
+    <p>Only the services needed to fulfil your order: our payment partner and
+        courier partners. We do not sell your personal data.</p>
+
+    <h2 class="h5 mt-4">Payments</h2>
+    <p>Payments are handled by our payment gateway. Your card or UPI details
+        are never stored on our servers.</p>
+
+    <h2 class="h5 mt-4">Cookies</h2>
+    <p>We use essential cookies to keep your cart and login working. [ADD
+        analytics cookies here if you use them]</p>
+
+    <h2 class="h5 mt-4">How long we keep it</h2>
+    <p>[DECIDE: e.g. order records for the period required by tax law;
+        uploaded designs for X months]</p>
+
+    <h2 class="h5 mt-4">Your rights</h2>
+    <p>You may ask to see, correct or delete your personal data by writing to
+        <span th:text="${shop.email}">email</span>.</p>
+</main>
+</body>
+</html>

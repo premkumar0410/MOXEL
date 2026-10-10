@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head><title>Refund &amp; Return Policy | Moxel</title></head>
+<body>
+<main>
+    <h1 class="h2 mb-3">Refund &amp; Return Policy</h1>
+    <p class="text-muted">Last updated: [DATE]</p>
+
+    <h2 class="h5 mt-4">Custom-printed items</h2>
+    <p>Every custom-printed item is made specially for you. For this reason we
+        cannot accept returns or exchanges for change of mind or incorrect size
+        selection. [PARTNERS TO DECIDE]</p>
+
+    <h2 class="h5 mt-4">When we will replace or refund</h2>
+    <ul>
+        <li>You received the wrong product, size or colour.</li>
+        <li>The print is defective or does not match the approved design.</li>
+        <li>The item was damaged in transit.</li>
+    </ul>
+    <p>Please email <span th:text="${shop.email}">email</span> within
+        [48 HOURS] of delivery with your order number and clear photos
+        [or an unboxing video].</p>
+
+    <h2 class="h5 mt-4">Order cancellation</h2>
+    <p>Orders can be cancelled before production starts. Once printing has
+        begun, we cannot cancel. [PARTNERS TO DECIDE]</p>
+
+    <h2 class="h5 mt-4">How refunds are paid</h2>
+    <p>Approved refunds are sent to the original payment method within
+        [5-7] business days.</p>
+
+    <h2 class="h5 mt-4">Ready-made (non-custom) items</h2>
+    <p>[DECIDE: return window, condition required, who pays return shipping]</p>
+</main>
+</body>
+</html>

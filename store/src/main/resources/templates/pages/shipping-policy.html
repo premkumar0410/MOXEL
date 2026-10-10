@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head><title>Shipping Policy | Moxel</title></head>
+<body>
+<main>
+    <h1 class="h2 mb-3">Shipping Policy</h1>
+    <p class="text-muted">Last updated: [DATE]</p>
+
+    <h2 class="h5 mt-4">Production time</h2>
+    <p>Custom orders are printed after payment and design approval. Production
+        usually takes [3-5] business days. Bulk orders may take longer, and we
+        will confirm the timeline when you order.</p>
+
+    <h2 class="h5 mt-4">Delivery</h2>
+    <p>We ship across India through trusted courier partners. Delivery usually
+        takes [3-7] business days after dispatch, depending on your location.</p>
+
+    <h2 class="h5 mt-4">Shipping charges</h2>
+    <p>[DECIDE: flat rate / free above ₹___ / calculated at checkout]</p>
+
+    <h2 class="h5 mt-4">Tracking</h2>
+    <p>You will receive a tracking number by email [or WhatsApp] once your
+        order is dispatched.</p>
+
+    <h2 class="h5 mt-4">Delays</h2>
+    <p>Delays caused by couriers, weather or public holidays are outside our
+        control. Contact us at <span th:text="${shop.email}">email</span> if your order
+        is late.</p>
+</main>
+</body>
+</html>

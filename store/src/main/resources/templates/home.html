@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <title>Moxel | Custom T-Shirt Printing in Chennai</title>
+</head>
+<body>
+<main>
+    <section class="bg-light rounded-3 p-4 p-md-5 mb-4">
+        <h1 class="display-5 fw-bold" th:text="${shop.name}">Moxel</h1>
+        <p class="lead mb-3" th:text="${shop.tagline}">Tagline</p>
+        <a class="btn btn-dark btn-lg" th:href="@{/products}">Shop now</a>
+    </section>
+
+    <h2 class="h4 mb-3">Featured</h2>
+    <div class="row g-3">
+        <div class="col-12 col-sm-6 col-lg-4" th:each="p : ${featured}">
+            <th:block th:replace="~{fragments/cards :: product-card(${p})}"></th:block>
+        </div>
+    </div>
+    <p class="mt-3"><a th:href="@{/products}">See all products &rarr;</a></p>
+</main>
+</body>
+</html>

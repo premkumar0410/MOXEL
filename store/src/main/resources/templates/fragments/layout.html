@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(title, content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:replace="${title}">Moxel</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" th:href="@{/}"
+               th:text="${shop?.name} ?: 'Moxel'">Moxel</a>
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#mainNav"
+                    aria-controls="mainNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/products}">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/contact}">Contact</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/cart}">Cart
+                            <span class="badge text-bg-light"
+                                  th:if="${cartCount != null and cartCount > 0}"
+                                  th:text="${cartCount}">2</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container py-4 flex-grow-1">
+    <div class="alert alert-success" role="alert"
+         th:if="${flashSuccess != null}" th:text="${flashSuccess}"></div>
+    <div class="alert alert-danger" role="alert"
+         th:if="${flashError != null}" th:text="${flashError}"></div>
+    <main th:replace="${content}">page content</main>
+</div>
+
+<footer class="bg-dark text-light py-4 mt-auto">
+    <div class="container">
+        <div class="row gy-3">
+            <div class="col-md-4">
+                <strong th:text="${shop?.name} ?: 'Moxel'">Moxel</strong>
+                <p class="small mb-0" th:if="${shop != null}" th:text="${shop.tagline}">Tagline</p>
+            </div>
+            <div class="col-6 col-md-4">
+                <ul class="list-unstyled small mb-0">
+                    <li><a class="link-light text-decoration-none" th:href="@{/privacy-policy}">Privacy Policy</a></li>
+                    <li><a class="link-light text-decoration-none" th:href="@{/terms}">Terms &amp; Conditions</a></li>
+                    <li><a class="link-light text-decoration-none" th:href="@{/refund-policy}">Refund &amp; Return Policy</a></li>
+                    <li><a class="link-light text-decoration-none" th:href="@{/shipping-policy}">Shipping Policy</a></li>
+                    <li><a class="link-light text-decoration-none" th:href="@{/contact}">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-4 small" th:if="${shop != null}">
+                <div th:text="${shop.address}">Address</div>
+                <div th:text="${shop.email}">Email</div>
+                <div th:text="${shop.phone}">Phone</div>
+            </div>
+        </div>
+        <p class="small text-secondary mt-3 mb-0">
+            &copy; <span th:text="${shop?.name} ?: 'Moxel'">Moxel</span>. All rights reserved.
+        </p>
+    </div>
+</footer>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

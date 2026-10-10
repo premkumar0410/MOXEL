@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <title th:text="${product.name} + ' | Moxel'">Product | Moxel</title>
+</head>
+<body>
+<main>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/products}">Shop</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="${product.name}">Product</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <div class="col-md-5">
+            <div class="product-photo rounded"><span>Photo coming soon</span></div>
+        </div>
+        <div class="col-md-7">
+            <h1 class="h2" th:text="${product.name}">Product name</h1>
+            <p class="text-muted" th:text="${product.categoryName}">Category</p>
+            <p th:text="${product.description}">Description</p>
+            <p class="text-muted" th:if="${product.gsm != null}">
+                <span th:text="${product.gsm}">180</span> GSM &middot;
+                <span th:text="${product.fabric}">Fabric</span>
+            </p>
+
+            <h2 class="h5 mt-4">Sizes &amp; colours</h2>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead>
+                    <tr><th>Colour</th><th>Size</th><th>Price</th><th>Availability</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="v : ${product.variants}">
+                        <td th:text="${v.color}">Black</td>
+                        <td th:text="${v.size}">M</td>
+                        <td>&#8377;<span th:text="${#numbers.formatDecimal(v.price, 1, 'COMMA', 2, 'POINT')}">399.00</span></td>
+                        <td>
+                            <span class="badge text-bg-success" th:if="${v.inStock}">In stock</span>
+                            <span class="badge text-bg-danger" th:unless="${v.inStock}">Out of stock</span>
+                        </td>
+                        <td>
+                            <form th:if="${v.inStock}" th:action="@{/cart/add}" method="post" class="d-flex gap-2">
+                                <input type="hidden" name="variantId" th:value="${v.id}">
+                                <input type="number" name="quantity" value="1" min="1" max="20"
+                                       class="form-control form-control-sm qty-input" aria-label="Quantity">
+                                <button type="submit" class="btn btn-dark btn-sm">Add</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
