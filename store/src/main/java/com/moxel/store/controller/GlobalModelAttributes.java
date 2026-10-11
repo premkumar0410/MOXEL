@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.security.Principal;
+
 @ControllerAdvice
 public class GlobalModelAttributes {
 
@@ -26,5 +28,10 @@ public class GlobalModelAttributes {
     @ModelAttribute("cartCount")
     public int cartCount(HttpServletRequest request) {
         return cartStore.itemCount(request);
+    }
+
+    @ModelAttribute("loggedIn")
+    public boolean loggedIn(Principal principal) {
+        return principal != null;
     }
 }

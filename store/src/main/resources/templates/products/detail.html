@@ -44,6 +44,7 @@
                         <td>
                             <form th:if="${v.inStock}" th:action="@{/cart/add}" method="post" class="d-flex gap-2">
                                 <input type="hidden" name="variantId" th:value="${v.id}">
+                                <input type="hidden" name="returnTo" th:value="'/products/' + ${product.slug}">
                                 <input type="number" name="quantity" value="1" min="1" max="20"
                                        class="form-control form-control-sm qty-input" aria-label="Quantity">
                                 <button type="submit" class="btn btn-dark btn-sm">Add</button>

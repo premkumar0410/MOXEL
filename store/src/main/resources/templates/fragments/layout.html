@@ -22,7 +22,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-md-center">
                     <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/products}">Shop</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/contact}">Contact</a></li>
@@ -33,6 +33,17 @@
                                   th:text="${cartCount}">2</span>
                         </a>
                     </li>
+                    <li class="nav-item" th:if="${loggedIn != true}">
+                        <a class="nav-link" th:href="@{/login}">Log in</a>
+                    </li>
+                    <li class="nav-item" th:if="${loggedIn == true}">
+                        <a class="nav-link" th:href="@{/account}">My account</a>
+                    </li>
+                    <li class="nav-item" th:if="${loggedIn == true}">
+                        <form th:action="@{/logout}" method="post" class="d-inline">
+                            <button type="submit" class="nav-link btn btn-link">Log out</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -40,8 +51,12 @@
 </header>
 
 <div class="container py-4 flex-grow-1">
-    <div class="alert alert-success" role="alert"
-         th:if="${flashSuccess != null}" th:text="${flashSuccess}"></div>
+    <div class="alert alert-success d-flex flex-wrap justify-content-between align-items-center gap-2"
+         role="alert" th:if="${flashSuccess != null}">
+        <span th:text="${flashSuccess}"></span>
+        <a class="btn btn-sm btn-dark" th:if="${flashCartLink != null}"
+           th:href="@{/cart}">View cart</a>
+    </div>
     <div class="alert alert-danger" role="alert"
          th:if="${flashError != null}" th:text="${flashError}"></div>
     <main th:replace="${content}">page content</main>

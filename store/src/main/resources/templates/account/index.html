@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head><title>My account | Moxel</title></head>
+<body>
+<main>
+    <h1 class="h3 mb-3">My account</h1>
+    <dl class="row">
+        <dt class="col-sm-3">Name</dt>
+        <dd class="col-sm-9" th:text="${account.fullName}">Name</dd>
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9" th:text="${account.email}">Email</dd>
+        <dt class="col-sm-3" th:if="${account.phone != null}">Phone</dt>
+        <dd class="col-sm-9" th:if="${account.phone != null}" th:text="'+91 ' + ${account.phone}">Phone</dd>
+    </dl>
+    <p class="text-muted">Your orders will appear here once checkout is ready.</p>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-outline-dark">Log out</button>
+    </form>
+</main>
+</body>
+</html>

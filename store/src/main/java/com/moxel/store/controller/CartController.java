@@ -12,9 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.regex.Pattern;
+
 @Controller
 @RequestMapping("/cart")
 public class CartController {
+
+    // Only these local paths are accepted as a "go back to" target.
+    private static final Pattern SAFE_RETURN =
+            Pattern.compile("^/products(/[a-z0-9-]{1,220})?$");
 
     private final CartStore cartStore;
     private final CartService cartService;
@@ -33,9 +39,14 @@ public class CartController {
     @PostMapping("/add")
     public String add(@RequestParam Long variantId,
                       @RequestParam(defaultValue = "1") int quantity,
+                      @RequestParam(required = false) String returnTo,
                       HttpSession session, RedirectAttributes redirect) {
-        flash(redirect, cartService.add(cartStore.getOrCreate(session), variantId, quantity));
-        return "redirect:/cart";
+        CartResult result = cartService.add(cartStore.getOrCreate(session), variantId, quantity);
+        flash(redirect, result);
+        if (result.success()) {
+            redirect.addFlashAttribute("flashCartLink", true);
+        }
+        return "redirect:" + safeReturnPath(returnTo);
     }
 
     @PostMapping("/update")
@@ -52,6 +63,13 @@ public class CartController {
         cartService.remove(cartStore.getOrCreate(session), variantId);
         redirect.addFlashAttribute("flashSuccess", "Item removed.");
         return "redirect:/cart";
+    }
+
+    private String safeReturnPath(String returnTo) {
+        if (returnTo != null && SAFE_RETURN.matcher(returnTo).matches()) {
+            return returnTo;
+        }
+        return "/products";
     }
 
     private void flash(RedirectAttributes redirect, CartResult result) {
